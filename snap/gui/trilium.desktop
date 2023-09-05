@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Trilium Notes
+Comment=Trilium Notes is a hierarchical note taking application with focus on building large personal knowledge bases.
+GenericName=Note taker
+Exec=trilium %U
+Icon=${SNAP}/meta/gui/trilium.png
+Type=Application
+StartupNotify=true
+Categories=Office;
+
