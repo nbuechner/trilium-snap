@@ -17,6 +17,17 @@ jobs:
           release_tag=$(curl -s https://api.github.com/repos/zadam/trilium/releases/latest | jq -r '.tag_name')
           echo "release_tag=$release_tag" >> $GITHUB_OUTPUT
           echo "latest release: $release_tag"
+      - name: Store artifact
+        id: store_artifact
+        run: |
+          echo "${{ steps.get_release.outputs.release_tag }}" > trilium-release-info
+          echo "Saved ${{ steps.get_release.outputs.release_tag }} to trilium-release-info"
+      - name: Upload new artifact
+        id: upload_artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: trilium-release-info
+          path: trilium-release-info
       - name: Checkout
         id: checkout
         uses: actions/checkout@v4
@@ -34,14 +45,3 @@ jobs:
         with:
           snap: ${{ steps.snapcraft_build.outputs.snap }}
           release: stable
-      - name: Store artifact
-        id: store_artifact
-        run: |
-          echo "${{ steps.get_release.outputs.release_tag }}" > trilium-release-info
-          echo "Saved ${{ steps.get_release.outputs.release_tag }} to trilium-release-info"
-      - name: Upload new artifact
-        id: upload_artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: trilium-release-info
-          path: trilium-release-info
