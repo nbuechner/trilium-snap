@@ -1,6 +1,6 @@
 name: trilium
 base: core22
-version: 0.60.4
+adopt-info: main
 summary: Trilium Notes is a hierarchical note taking application
 description: |
     Trilium Notes is a hierarchical note taking application with focus on building large personal knowledge bases
@@ -17,8 +17,12 @@ architectures:
 apps:
   trilium:
     command: usr/bin/trilium --no-sandbox
-    plugs: [home, x11, desktop, removable-media, network, audio-playback, shared-memory ]
+    plugs: [home, x11, desktop, removable-media, network, audio-playback, shared-memory, unity7 ]
     extensions: [ gnome ]
+    environment:
+      TMPDIR: $XDG_RUNTIME_DIR
+      DISABLE_WAYLAND: 1
+      LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libunit
 
 plugs:
   shared-memory:
@@ -26,11 +30,17 @@ plugs:
 
 parts:
   main:
-    source: https://github.com/zadam/trilium/releases/download/v${SNAPCRAFT_PROJECT_VERSION}/trilium_${SNAPCRAFT_PROJECT_VERSION}_amd64.deb
+    source: .
     plugin: dump
-    source-type: deb
     override-build: |
+      version=$(wget -qO- https://api.github.com/repos/zadam/trilium/releases/latest | jq -r '.tag_name' | cut -c2-)
+      URL=https://github.com/zadam/trilium/releases/download/v${version}/trilium_${version}_amd64.deb
+      wget -q -O- $URL | dpkg -x - "$SNAPCRAFT_PART_INSTALL"
+      craftctl set version="$version"
       craftctl default
+    build-packages:
+        - wget
+        - jq
     stage-packages:
        - libgtk-3-0
        - libnotify4
