@@ -24,7 +24,7 @@ jobs:
           echo "Saved ${{ steps.get_release.outputs.release_tag }} to trilium-release-info"
       - name: Upload new artifact
         id: upload_artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: trilium-release-info
           path: trilium-release-info
