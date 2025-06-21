@@ -14,7 +14,7 @@ jobs:
       - name: Get latest release and write artifact file
         id: get_release
         run: |
-          release_tag=$(curl -s https://api.github.com/repos/zadam/trilium/releases/latest | jq -r '.tag_name')
+          release_tag=$(curl -s https://api.github.com/repos/TriliumNext/trilium/releases/latest | jq -r '.tag_name')
           echo "release_tag=$release_tag" >> $GITHUB_OUTPUT
           echo "latest release: $release_tag"
       - name: Store artifact
