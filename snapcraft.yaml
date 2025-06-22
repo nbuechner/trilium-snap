@@ -1,5 +1,5 @@
 name: trilium
-base: core22
+base: core24
 adopt-info: main
 summary: Trilium Notes is a hierarchical note taking application
 description: |
@@ -10,9 +10,12 @@ description: |
 
 grade: stable
 confinement: strict
-architectures:
-  - build-on: amd64
-    build-for: amd64
+
+
+platforms:
+  amd64:
+    build-on: [amd64]
+    build-for: [amd64]
 
 apps:
   trilium:
