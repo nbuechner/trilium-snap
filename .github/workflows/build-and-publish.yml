@@ -34,7 +34,7 @@ jobs:
       - uses: docker/setup-qemu-action@v3
       - name: Snapcraft build
         id: snapcraft_build
-        uses: diddlesnaps/snapcraft-multiarch-action@v1
+        uses: canonical/snapcraft-multiarch-action@v1
         with:
            architecture: ${{ matrix.platform }}
       - name: Snapcraft publish
