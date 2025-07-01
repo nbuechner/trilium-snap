@@ -37,7 +37,7 @@ parts:
     plugin: dump
     override-build: |
       version=$(wget -qO- https://api.github.com/repos/TriliumNext/trilium/releases/latest | jq -r '.tag_name' | cut -c2-)
-      URL=https://github.com/TriliumNext/trilium/releases/download/v${version}/TriliumNextNotes-v${version}-linux-x64.deb
+      URL=https://github.com/TriliumNext/trilium/releases/download/v${version}/TriliumNotes-v${version}-linux-x64.deb
       wget -q -O- $URL | dpkg -x - "$SNAPCRAFT_PART_INSTALL"
       rm -f $SNAPCRAFT_PART_INSTALL/usr/lib/trilium/chrome-sandbox
       rm -f $SNAPCRAFT_PART_INSTALL/etc/pulse/client.conf.d/01-enable-autospawn.conf
